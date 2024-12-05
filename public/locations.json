@@ -1,0 +1,114 @@
+[
+  {
+    "nombre": "Central Park",
+    "pelicula": "Breakfast at Tiffany's",
+    "lat": 40.785091,
+    "lng": -73.968285,
+    "imagen": "../imagenesLugares/Central_Park_Breakfast_at_Tiffanys.jpg"
+  },
+  {
+    "nombre": "The Colosseum",
+    "pelicula": "Gladiator",
+    "lat": 41.890251,
+    "lng": 12.492373,
+    "imagen": "../imagenesLugares/The_Colosseum_Gladiator.webp"
+  },
+  {
+    "nombre": "Eiffel Tower",
+    "pelicula": "The Da Vinci Code",
+    "lat": 48.8588443,
+    "lng": 2.2943506,
+    "imagen": "../imagenesLugares/Eiffel_Tower_The_Da_Vinci_Code.jpg"
+  },
+  {
+    "nombre": "Hogwarts Castle",
+    "pelicula": "Harry Potter and the Philosopher's Stone",
+    "lat": 56.4981,
+    "lng": -3.7437,
+    "imagen": "../imagenesLugares/Hogwarts_Castle_Harry_Potter_and_the_Philosophers_Stone.jpg"
+  },
+  {
+    "nombre": "Alamo Square",
+    "pelicula": "Full House",
+    "lat": 37.7764,
+    "lng": -122.4346,
+    "imagen": "../imagenesLugares/Alamo_Square_Full_House.jpg"
+  },
+  {
+    "nombre": "Red Square",
+    "pelicula": "Mission: Impossible – Ghost Protocol",
+    "lat": 55.7558,
+    "lng": 37.6176,
+    "imagen": "../imagenesLugares/Red_Square_Mission_Impossible_Ghost_Protocol.jpg"
+  },
+  {
+    "nombre": "Taj Mahal",
+    "pelicula": "The Best Exotic Marigold Hotel",
+    "lat": 27.1751,
+    "lng": 78.0421,
+    "imagen": "../imagenesLugares/Taj_Mahal_The_Best_Exotic_Marigold_Hotel.webp"
+  },
+  {
+    "nombre": "Lake Como",
+    "pelicula": "Casino Royale",
+    "lat": 45.9590,
+    "lng": 9.2878,
+    "imagen": "../imagenesLugares/Lake_Como_Casino_Royale.webp"
+  },
+  {
+    "nombre": "Mount Fuji",
+    "pelicula": "The Last Samurai",
+    "lat": 35.3606,
+    "lng": 138.7274,
+    "imagen": "../imagenesLugares/Mount_Fuji_The_Last_Samurai.jpg"
+  },
+  {
+    "nombre": "Palace of Versailles",
+    "pelicula": "Marie Antoinette",
+    "lat": 48.8049,
+    "lng": 2.1204,
+    "imagen": "../imagenesLugares/Palace_of_Versailles_Marie_Antoinette.webp"
+  },
+  {
+    "nombre": "Dunas de Maspalomas",
+    "pelicula": "Clash of the Titans",
+    "lat": 27.7513,
+    "lng": -15.5762,
+    "imagen": "../imagenesLugares/Dunas_de_Maspalomas_Clash_of_the_Titans.jpg"
+  },
+  {
+    "nombre": "Plaza Mayor de Madrid",
+    "pelicula": "Alatriste",
+    "lat": 40.4154,
+    "lng": -3.7074,
+    "imagen": "../imagenesLugares/Plaza_Mayor_de_Madrid_Alatriste.jpg"
+  },
+  {
+    "nombre": "Parque Güell",
+    "pelicula": "Vicky Cristina Barcelona",
+    "lat": 41.4145,
+    "lng": 2.1527,
+    "imagen": "../imagenesLugares/Parque_Guell_Vicky_Cristina_Barcelona.jpg"
+  },
+  {
+    "nombre": "La Alhambra",
+    "pelicula": "El Cid",
+    "lat": 37.1761,
+    "lng": -3.5881,
+    "imagen": "../imagenesLugares/La_Alhambra_El_Cid.jpg"
+  },
+  {
+    "nombre": "Teide National Park",
+    "pelicula": "Fast & Furious 6",
+    "lat": 28.2712,
+    "lng": -16.6425,
+    "imagen": "../imagenesLugares/Teide_National_Park_Fast_and_Furious_6.jpg"
+  },
+  {
+    "nombre": "Ciudad de las Artes y las Ciencias",
+    "pelicula": "Tomorrowland",
+    "lat": 39.4551,
+    "lng": -0.3549,
+    "imagen": "../imagenesLugares/Ciudad_de_las_Artes_y_las_Ciencias_Tomorrowland.jpg"
+  }
+]

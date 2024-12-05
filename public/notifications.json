@@ -1,0 +1,6 @@
+[
+  { "id": 1, "message": "¡Recuerda echar un vistazo a las recomendaciones del mes!" },
+  { "id": 2, "message": "Has desbloqueado una prenda." },
+  { "id": 3, "message": "¡Jaime quiere ser tu amigo! " },
+  { "id": 4, "message": "Has visitado: X países ", "badge": "LOGRO" }
+]
