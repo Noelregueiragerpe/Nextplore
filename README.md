@@ -1,4 +1,4 @@
-# Film Locations Explorer
+# Nextplore
 
 **Descripción:**  
 Esta aplicación permite a los usuarios explorar y descubrir lugares icónicos donde se han grabado famosas películas y series. A través de un sistema de búsqueda interactivo, los usuarios pueden encontrar información sobre los lugares de rodaje, desde monumentos hasta escenarios naturales. Además, la app ofrece logros y trajes como incentivos para explorar más lugares.
