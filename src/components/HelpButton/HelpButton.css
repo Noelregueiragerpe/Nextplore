@@ -1,0 +1,14 @@
+.help-button {
+  color: darkblue;
+  border-radius: 5px;
+  border: 1px solid black;
+  height: 2em;
+  background-color: orange;
+  width: 10em;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.help-button:hover{
+  background-color: #e0911b;
+}

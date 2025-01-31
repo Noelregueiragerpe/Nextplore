@@ -18,6 +18,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import Dashboard from "../Dashboard/dashboard";
+import HelpButton from "../components/HelpButton/HelpButton";
 
 const defaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -407,6 +408,9 @@ const Travel = () => {
               <p>No hay puntos visibles en este momento.</p>
             )}
           </div>
+        </div>
+        <div className="help-button-component">
+          <HelpButton />
         </div>
       </div>
     </div>

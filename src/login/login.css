@@ -253,3 +253,7 @@ color: #ececec;
 input::placeholder {
   color: #ececec;
 }
+
+.help-button-component{
+  margin-top: 2em;
+}

@@ -4,6 +4,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate para la redirección
 import "./login.css";
 import logo from "../icons/logo.png";
+import HelpButton from "../components/HelpButton/HelpButton";
         
 
 const Login = () => {
@@ -44,6 +45,9 @@ const Login = () => {
         <div className="signup-section">
           <p className="pColor">¿Aún no tienes cuenta de usuario?</p>
           <button className="signup-button">Regístrate ya</button>
+        </div>
+        <div className="help-button-component">
+          <HelpButton />
         </div>
         <footer className="login-footer">
           <p>

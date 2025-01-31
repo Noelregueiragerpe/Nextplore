@@ -15,6 +15,7 @@ import suit2 from "../avatar/avatar_ironman.png";
 import suit3 from "../avatar/avatar_lotr.png";
 
 import { useNavigate } from "react-router-dom";
+import HelpButton from "../components/HelpButton/HelpButton";
 
 const Dashboard = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -123,10 +124,7 @@ const Dashboard = () => {
             <img className="avatar" alt="avatar" src={selectedSuit} />
             {isAvatarModalOpen && (
               <div className="modal-overlay" onClick={closeAvatarModal}>
-                <div
-                  className="modal"
-                  onClick={(e) => e.stopPropagation()}
-                >
+                <div className="modal" onClick={(e) => e.stopPropagation()}>
                   <div style={{ position: "relative" }}>
                     <button
                       className="arrow-button arrow-left"
@@ -214,7 +212,12 @@ const Dashboard = () => {
             </div>
           </section>
         </section>
-        <button className="logout-button" onClick={handle}>Cerrar sesión</button>
+        <button className="logout-button" onClick={handle}>
+          Cerrar sesión
+        </button>
+        <div className="help-button-component">
+          <HelpButton />
+        </div>
       </div>
     </div>
   );
