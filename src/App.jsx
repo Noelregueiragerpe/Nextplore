@@ -26,17 +26,7 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route
-          path="/documentacion"
-          element={
-            <iframe
-              src="/documentation/html/Manual Ayuda Nextplore.html"
-              width="100%"
-              height="1000px"
-              title="Documentación"
-            ></iframe>
-          }
-        />
+            <Route path="/documentacion" element={<iframe src="/documentation/html/Manual Ayuda Nextplore.html" width="100%" height="1000px" title="Documentación"></iframe>} />
       </Routes>
     </Router>
   );

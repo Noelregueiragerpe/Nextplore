@@ -20,14 +20,14 @@ const PrivateRoute = ({ children }) => {
     if (decodedToken.exp < currentTime) {
       // Si el token ha expirado, lo eliminamos y redirigimos al login
       localStorage.removeItem("token");
-      return <Navigate to="/login" />;
+      return <Navigate to="/" />;
     }
     
     return children; // Si el token es válido, renderiza la ruta protegida
   } catch (error) {
     console.error("Error decodificando el token:", error);
     localStorage.removeItem("token"); // Si el token no es válido, lo eliminamos
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 };
 
