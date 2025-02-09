@@ -421,3 +421,9 @@ body {
 .modal .modal-close-button:hover {
   color: darkblue; /* Cambia a un tono más oscuro al pasar el cursor */
 }
+
+.help-button-component{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

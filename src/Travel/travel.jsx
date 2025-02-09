@@ -7,6 +7,7 @@ import search from "../icons/search.png";
 import home from "../icons/home.png";
 import "leaflet/dist/leaflet.css";
 import { useNavigate } from "react-router-dom";
+import HelpButton from "../components/HelpButton/HelpButton";
 
 import {
   MapContainer,
@@ -260,7 +261,8 @@ const Travel = () => {
 
       <div className="container">
         <div className="map-container">
-          <MapContainer
+          <MapContainer 
+            data-testid="map-container"
             center={position}
             zoom={zoomLevel}
             style={{
@@ -407,6 +409,9 @@ const Travel = () => {
               <p>No hay puntos visibles en este momento.</p>
             )}
           </div>
+        </div>
+        <div className="help-button-component">
+          <HelpButton />
         </div>
       </div>
     </div>

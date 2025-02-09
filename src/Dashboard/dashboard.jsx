@@ -13,6 +13,7 @@ import avatar from "../avatar/avatar.png";
 import suit1 from "../avatar/avatar_ninja.png";
 import suit2 from "../avatar/avatar_ironman.png";
 import suit3 from "../avatar/avatar_lotr.png";
+import HelpButton from "../components/HelpButton/HelpButton";
 
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +25,8 @@ const Dashboard = () => {
   const [currentSuitIndex, setCurrentSuitIndex] = useState(0);
   const suits = [avatar, suit1, suit2, suit3];
   const [selectedSuit, setSelectedSuit] = useState(avatar);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Leer el índice guardado en localStorage
@@ -85,13 +88,19 @@ const Dashboard = () => {
   const toggleMenu = () => {
     setIsMenuExpanded(!isMenuExpanded);
   };
-  const navigate = useNavigate();
 
   const handleLogin = () => {
     navigate("../travel");
   };
+
   const handle = () => {
     navigate("../");
+  };
+
+  // Función para cerrar sesión
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Elimina el token del localStorage
+    navigate("/"); // Redirige al login
   };
 
   return (
@@ -106,7 +115,11 @@ const Dashboard = () => {
       </header>
       <div className="container">
         <div className={`expandable-menu ${isMenuExpanded ? "expanded" : ""}`}>
-          <div className="menu-toggle" onClick={toggleMenu}>
+          <div
+            className="menu-toggle"
+            onClick={toggleMenu}
+            data-testid="menu-toggle"
+          >
             {isMenuExpanded ? "⟨" : "⟩"}
           </div>
           <div className="menu-options">
@@ -123,10 +136,7 @@ const Dashboard = () => {
             <img className="avatar" alt="avatar" src={selectedSuit} />
             {isAvatarModalOpen && (
               <div className="modal-overlay" onClick={closeAvatarModal}>
-                <div
-                  className="modal"
-                  onClick={(e) => e.stopPropagation()}
-                >
+                <div className="modal" onClick={(e) => e.stopPropagation()}>
                   <div style={{ position: "relative" }}>
                     <button
                       className="arrow-button arrow-left"
@@ -214,7 +224,12 @@ const Dashboard = () => {
             </div>
           </section>
         </section>
-        <button className="logout-button" onClick={handle}>Cerrar sesión</button>
+        <div className="help-button-component">
+          <HelpButton />
+        </div>
+        <button className="logout-button" onClick={handleLogout}>
+          Cerrar sesión
+        </button>
       </div>
     </div>
   );

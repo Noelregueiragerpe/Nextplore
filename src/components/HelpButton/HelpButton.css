@@ -1,0 +1,24 @@
+.help-button {
+  color: #00008a;
+  border-radius: 5px;
+  border: 1px solid black;
+  height: 3em;
+  background-color: orange;
+  width: 3em;
+  cursor: pointer;
+  transition: all 0.5s;
+  position: absolute;
+  right: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.help-button:hover{
+  background-color: #e0911b;
+}
+
+.help-image{
+  height: 2em;
+  width: 2em;
+}

@@ -1,0 +1,9 @@
+// src/utils/helpers.js
+
+export const filterLocations = (locations, query) => {
+  if (!query) return locations;
+  return locations.filter(location => 
+    location.nombre.toLowerCase().includes(query.toLowerCase()) ||
+    location.pelicula.toLowerCase().includes(query.toLowerCase())
+  );
+};

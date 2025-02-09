@@ -165,3 +165,8 @@ body {
   color: white;
   border-radius: 5px;
 }
+.help-button-component{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
