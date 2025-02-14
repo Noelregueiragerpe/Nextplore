@@ -78,6 +78,7 @@ const Login = () => {
     }
   };
 
+
   return (
     <div>
       <div className="login-header">
@@ -180,6 +181,7 @@ const Login = () => {
         <div className="help-button-component">
           <HelpButton />
         </div>
+        <button><a href="/usersReport">INFORME</a></button>
       </div>
     </div>
   );

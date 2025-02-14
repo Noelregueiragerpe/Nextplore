@@ -4,6 +4,7 @@ import Login from "./login/login";
 import Dashboard from "./Dashboard/dashboard";
 import Travel from "../src/Travel/travel";
 import PrivateRoute from "./PrivateRoute";
+import UserReport from "./components/UsersReport/UsersReport";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           }
         />
             <Route path="/documentacion" element={<iframe src="/documentation/html/Manual Ayuda Nextplore.html" width="100%" height="1000px" title="Documentación"></iframe>} />
+            <Route path="/usersReport" element={<UserReport />} />
       </Routes>
     </Router>
   );
