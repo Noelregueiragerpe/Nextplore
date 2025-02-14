@@ -18,29 +18,32 @@ const Login = () => {
   });
 
   const handleLogin = async () => {
-    // Validación previa: Verifica que los campos no estén vacíos
     if (!email || !password) {
       setError("Por favor, ingresa tu correo y contraseña.");
-      return; // Detener la ejecución si los campos están vacíos
+      return;
     }
-
+  
     try {
-      const response = await fetch("http://localhost:8080/api/usuario/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          correo: email,
-          contrasena: password,
-        }),
-      });
-
+      const params = new URLSearchParams();
+      params.append("correo", email);
+      params.append("contrasena", password);
+  
+      const response = await fetch(
+        `http://localhost:8080/api/usuario/login?${params.toString()}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+  
       if (response.ok) {
         const data = await response.json();
-        const { token } = data;
-
-        localStorage.setItem("token", token);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("nombreUsuario", data.nombre);
+        localStorage.setItem("idUsuario", data.id);
+  
         navigate("/dashboard");
       } else {
         setError("Credenciales incorrectas");
@@ -49,6 +52,7 @@ const Login = () => {
       setError("Hubo un problema al conectar con el servidor.");
     }
   };
+  
 
   const handleRegister = async () => {
     try {
@@ -61,22 +65,16 @@ const Login = () => {
       });
 
       if (response.ok) {
-        setShowRegister(false); // Cerrar formulario de registro si es exitoso
+        setShowRegister(false);
         setSuccess("¡Registro exitoso! Ahora puedes iniciar sesión.");
-        setError(""); // Limpiar mensaje de error si la solicitud es exitosa
+        setError("");
       } else {
         setError("Error al registrarse. Intenta nuevamente.");
-        setSuccess(""); // Limpiar mensaje de éxito si hubo un error
+        setSuccess("");
       }
     } catch (error) {
       setError("No se pudo conectar con el servidor.");
-      setSuccess(""); // Limpiar mensaje de éxito si hubo un error de conexión
-    }
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      showRegister ? handleRegister() : handleLogin();
+      setSuccess("");
     }
   };
 
@@ -89,7 +87,6 @@ const Login = () => {
 
       <div className="login-container">
         {!showRegister ? (
-          // Formulario de inicio de sesión
           <div className="login-form">
             <div className="inputs-containers">
               <div className="input-container">
@@ -98,7 +95,7 @@ const Login = () => {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Usuario o email"
+                  placeholder="Correo electrónico"
                 />
               </div>
               <div className="input-container">
@@ -108,7 +105,6 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Contraseña"
-                  onKeyDown={handleKeyDown}
                 />
               </div>
             </div>
@@ -130,7 +126,6 @@ const Login = () => {
             </div>
           </div>
         ) : (
-          // Formulario de registro
           <div className="register-form">
             <h2>Registro</h2>
             <div className="inputs-containers">
@@ -168,7 +163,6 @@ const Login = () => {
                     })
                   }
                   placeholder="Contraseña"
-                  onKeyDown={handleKeyDown}
                 />
               </div>
             </div>
@@ -183,38 +177,10 @@ const Login = () => {
             </button>
           </div>
         )}
-         <div className="help-button-component">
+        <div className="help-button-component">
           <HelpButton />
         </div>
-        <footer className="login-footer">
-          <p>
-            Nextplore pretende dar al usuario una "gamificación" de las visitas
-            a lugares cinematográficos.
-          </p>
-        </footer>
       </div>
-
-      {/* POPUP DE ÉXITO */}
-      {success && (
-        <>
-          <div className="popup-overlay"></div>
-          <div className="popup success-popup">
-            <p>{success}</p>
-            <button onClick={() => setSuccess("")}>Cerrar</button>
-          </div>
-        </>
-      )}
-
-      {/* POPUP DE ERROR */}
-      {error && (
-        <>
-          <div className="popup-overlay"></div>
-          <div className="popup error-popup">
-            <p>{error}</p>
-            <button onClick={() => setError("")}>Cerrar</button>
-          </div>
-        </>
-      )}
     </div>
   );
 };

@@ -25,6 +25,7 @@ const Dashboard = () => {
   const [currentSuitIndex, setCurrentSuitIndex] = useState(0);
   const suits = [avatar, suit1, suit2, suit3];
   const [selectedSuit, setSelectedSuit] = useState(avatar);
+  const [nombreUsuario, setNombreUsuario] = useState("");
 
   const navigate = useNavigate();
 
@@ -37,6 +38,13 @@ const Dashboard = () => {
       setSelectedSuit(suits[index]);
     }
   }, []);
+
+  useEffect(() => {
+    const nombreGuardado = localStorage.getItem("nombreUsuario");
+    if (nombreGuardado) {
+      setNombreUsuario(nombreGuardado);
+    }
+  });
 
   const openAvatarModal = () => setIsAvatarModalOpen(true);
   const closeAvatarModal = () => setIsAvatarModalOpen(false);
@@ -98,9 +106,26 @@ const Dashboard = () => {
   };
 
   // Función para cerrar sesión
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Elimina el token del localStorage
-    navigate("/"); // Redirige al login
+  const handleLogout = async () => {
+    const idUsuario = localStorage.getItem("idUsuario");
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/usuario/logout/${idUsuario}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Error en la respuesta de la API:", errorText);
+        throw new Error("Error al cerrar sesión");
+      }
+      localStorage.clear(); // Elimina todos los datos de sesión
+      navigate("../");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -174,7 +199,7 @@ const Dashboard = () => {
             )}
 
             <div className="info">
-              <p className="info">NombreUsuario</p>
+              <p className="info">{nombreUsuario || "NombreUsuario"}</p>
               <p className="info">Nivel 1</p>
               <img src={spainFlag} alt="País" className="country-flag" />
             </div>
