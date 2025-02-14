@@ -9,9 +9,23 @@
   padding: 5px;
 }
 
+.report-button {
+  color: #00008a;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: orange;
+  cursor: pointer;
+  transition: all 0.5s;
+  width: 7em;
+  height: 2em;
+}
+
+.report-button:hover{
+  background-color: #f4a01b;
+}
+
 /* Ajustes para pantallas de móviles */
 @media (max-width: 480px) {
-  
   .login-container {
     max-width: 100%;
   }
@@ -178,7 +192,6 @@ input {
 }
 
 .login-button {
-  
   width: 50%;
   padding: 10px;
   margin-top: 2em;
@@ -247,7 +260,7 @@ input {
   padding: 10px;
 }
 .pColor {
-color: #ececec;
+  color: #ececec;
 }
 
 input::placeholder {
@@ -320,16 +333,14 @@ input::placeholder {
   color: #293968;
 }
 
-
 .success-popup {
-  background-color: #4CAF50; /* Verde */
+  background-color: #4caf50; /* Verde */
   color: white;
   padding: 20px;
   border-radius: 5px;
   text-align: center;
 }
 
-
-.help-button-component{
+.help-button-component {
   margin-top: 2em;
 }

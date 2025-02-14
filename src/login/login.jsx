@@ -181,7 +181,7 @@ const Login = () => {
         <div className="help-button-component">
           <HelpButton />
         </div>
-        <button><a href="/usersReport">INFORME</a></button>
+        <button className="report-button" onClick={() => navigate("/usersReport")}>INFORME</button>
       </div>
     </div>
   );
