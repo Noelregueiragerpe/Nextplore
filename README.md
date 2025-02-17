@@ -52,9 +52,8 @@ El modelo de datos de Nextplore se basa en la relación entre usuarios, películ
 <br/>
 ![image](https://github.com/user-attachments/assets/9d9a6d5a-93d9-4a92-ab56-50575ea097a0)
 
-<br/>
+
 **Modelo Relacional:**
-<br/>
 Usuario: **_id_usuario_**, nombre, email, contraseña
 
 Notificación: **_id_notificacion_**, tipo, mensaje, **id_usuario***
