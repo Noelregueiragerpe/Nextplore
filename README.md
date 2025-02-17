@@ -54,7 +54,7 @@ El modelo de datos de Nextplore se basa en la relación entre usuarios, películ
 
 <br/>
 **Modelo Relacional:**
-
+<br/>
 Usuario: **_id_usuario_**, nombre, email, contraseña
 
 Notificación: **_id_notificacion_**, tipo, mensaje, **id_usuario***
@@ -64,9 +64,9 @@ Lugar: **_id_lugar_**, nombre, categoría, ciudad, coordenada_x, coordenada_y, *
 Explora: **_id_usuario_***, **_id_lugar_***, favorito, visitado
 
 Pelicula: **_id_pelicula_**, nombre, genero, año
-<br />
+<br/>
 **Modelo UML:**
-
+<br/>
 <img width="407" alt="umlCaptura" src="https://github.com/user-attachments/assets/157fc5d9-747c-4b9f-90ce-3368caaa7ddd" />
 
 </details>
