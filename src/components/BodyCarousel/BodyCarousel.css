@@ -1,0 +1,8 @@
+.body-carousel-img {
+    display: flex !important;
+    justify-content: center;
+}
+
+.body-carousel-img img {
+    width: 150px;
+}

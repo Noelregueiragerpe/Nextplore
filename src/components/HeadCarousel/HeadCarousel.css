@@ -1,0 +1,25 @@
+.head-wrapper {
+  position: relative;
+  height: 150px;
+  overflow: visible;
+  z-index: 2;
+}
+
+.head-carousel-img {
+  display: flex !important;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.head-carousel-img img {
+  width: 60%;
+  max-height: 180px;
+}
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next,
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+  color: black;
+}

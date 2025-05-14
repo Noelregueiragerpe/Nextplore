@@ -16,6 +16,8 @@ import suit3 from "../avatar/avatar_lotr.png";
 import HelpButton from "../components/HelpButton/HelpButton";
 
 import { useNavigate } from "react-router-dom";
+import HeadCarousel from "../components/HeadCarousel/HeadCarousel";
+import BodyCarousel from "../components/BodyCarousel/BodyCarousel";
 
 const Dashboard = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -25,6 +27,8 @@ const Dashboard = () => {
   const [currentSuitIndex, setCurrentSuitIndex] = useState(0);
   const suits = [avatar, suit1, suit2, suit3];
   const [selectedSuit, setSelectedSuit] = useState(avatar);
+  const [selectedHead, setSelectedHead] = useState(0);
+  const [selectedBody, setSelectedBody] = useState(0);
   const [nombreUsuario, setNombreUsuario] = useState("");
 
   const navigate = useNavigate();
@@ -63,6 +67,8 @@ const Dashboard = () => {
     const selectedSuitIndex = currentSuitIndex;
     setSelectedSuit(suits[selectedSuitIndex]);
     localStorage.setItem("selectedSuitIndex", selectedSuitIndex); // Guardar en localStorage
+    console.log("cabeza:", selectedHead);
+    console.log("cuerpo:", selectedBody);
     closeAvatarModal();
   };
 
@@ -89,6 +95,19 @@ const Dashboard = () => {
     fetchNotifications();
   }, []);
 
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try {
+        const response = await fetch("localhost:8000/api/usuario/avatar");
+        if (!response.ok) {
+          throw new Error("Error al cargar el avatar");
+        }
+      } catch (error) {
+        console.error("Error: ", error);
+      }
+    };
+  });
+
   const handleClick = (image) => {
     setSelectedImage(image);
   };
@@ -110,12 +129,15 @@ const Dashboard = () => {
     const idUsuario = localStorage.getItem("idUsuario");
 
     try {
-      const response = await fetch(`http://localhost:8080/api/usuario/logout/${idUsuario}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/usuario/logout/${idUsuario}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Error en la respuesta de la API:", errorText);
@@ -163,7 +185,9 @@ const Dashboard = () => {
               <div className="modal-overlay" onClick={closeAvatarModal}>
                 <div className="modal" onClick={(e) => e.stopPropagation()}>
                   <div style={{ position: "relative" }}>
-                    <button
+                    <HeadCarousel onChange={setSelectedHead}/>
+                    <BodyCarousel onChange={setSelectedBody}/>
+                    {/* <button
                       className="arrow-button arrow-left"
                       onClick={handlePreviousSuit}
                     >
@@ -179,7 +203,7 @@ const Dashboard = () => {
                       onClick={handleNextSuit}
                     >
                       {">"}
-                    </button>
+                    </button> */}
                   </div>
                   <button
                     onClick={handleSelectSuit}
