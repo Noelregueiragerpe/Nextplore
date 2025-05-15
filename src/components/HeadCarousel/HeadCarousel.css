@@ -5,15 +5,13 @@
   z-index: 2;
 }
 
-.head-carousel-img {
+.head-carousel-image {
   display: flex !important;
   justify-content: center;
   align-items: flex-end;
-  height: 100%;
 }
 
-.head-carousel-img img {
-  width: 60%;
+.head-carousel-image svg {
   max-height: 180px;
 }
 

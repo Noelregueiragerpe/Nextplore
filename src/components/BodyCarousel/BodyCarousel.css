@@ -3,6 +3,7 @@
     justify-content: center;
 }
 
-.body-carousel-img img {
-    width: 150px;
+.body-carousel-img svg {
+    max-width: 180px;
+    max-height: 200px;
 }

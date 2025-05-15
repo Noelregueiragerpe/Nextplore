@@ -95,19 +95,6 @@ const Dashboard = () => {
     fetchNotifications();
   }, []);
 
-  useEffect(() => {
-    const fetchAvatar = async () => {
-      try {
-        const response = await fetch("localhost:8000/api/usuario/avatar");
-        if (!response.ok) {
-          throw new Error("Error al cargar el avatar");
-        }
-      } catch (error) {
-        console.error("Error: ", error);
-      }
-    };
-  });
-
   const handleClick = (image) => {
     setSelectedImage(image);
   };
