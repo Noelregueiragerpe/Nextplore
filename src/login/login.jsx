@@ -22,12 +22,12 @@ const Login = () => {
       setError("Por favor, ingresa tu correo y contraseña.");
       return;
     }
-  
+
     try {
       const params = new URLSearchParams();
       params.append("correo", email);
       params.append("contrasena", password);
-  
+
       const response = await fetch(
         `http://localhost:8080/api/usuario/login?${params.toString()}`,
         {
@@ -37,13 +37,13 @@ const Login = () => {
           },
         }
       );
-  
+
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         localStorage.setItem("nombreUsuario", data.nombre);
         localStorage.setItem("idUsuario", data.id);
-  
+
         navigate("/dashboard");
       } else {
         setError("Credenciales incorrectas");
@@ -52,7 +52,6 @@ const Login = () => {
       setError("Hubo un problema al conectar con el servidor.");
     }
   };
-  
 
   const handleRegister = async () => {
     try {
@@ -77,7 +76,6 @@ const Login = () => {
       setSuccess("");
     }
   };
-
 
   return (
     <div>
@@ -181,7 +179,12 @@ const Login = () => {
         <div className="help-button-component">
           <HelpButton />
         </div>
-        <button className="report-button" onClick={() => navigate("/usersReport")}>INFORME</button>
+        <button
+          className="report-button"
+          onClick={() => navigate("/usersReport")}
+        >
+          INFORME
+        </button>
       </div>
     </div>
   );

@@ -35,7 +35,10 @@ const HeadCarousel = ({ onChange }) => {
   }, []);
 
   const handleHeadChange = (current) => {
-    onChange(current);
+    const selectedHead = heads[current];
+    if (selectedHead) {
+      onChange(selectedHead.id);
+    }
   };
 
   return (
@@ -47,6 +50,7 @@ const HeadCarousel = ({ onChange }) => {
           dots={false}
           afterChange={handleHeadChange}
           draggable={true}
+          speed={200}
         >
           {heads.map((head, index) => (
             <div

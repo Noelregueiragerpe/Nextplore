@@ -29,19 +29,48 @@ const Dashboard = () => {
   const [selectedSuit, setSelectedSuit] = useState(avatar);
   const [selectedHead, setSelectedHead] = useState(0);
   const [selectedBody, setSelectedBody] = useState(0);
+  const [bodyCode, setBodyCode] = useState("");
+  const [headCode, setHeadCode] = useState("");
   const [nombreUsuario, setNombreUsuario] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Leer el índice guardado en localStorage
-    const savedSuitIndex = localStorage.getItem("selectedSuitIndex");
-    if (savedSuitIndex !== null) {
-      const index = parseInt(savedSuitIndex, 10);
-      setCurrentSuitIndex(index);
-      setSelectedSuit(suits[index]);
-    }
+    getAvatar();
   }, []);
+
+  async function getAvatar() {
+      const idUsuario = localStorage.getItem("idUsuario");
+      const token = localStorage.getItem("token");
+
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/avatar/${idUsuario}`,
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Error al obtener el avatar");
+        }
+
+        const data = await response.json();
+
+        if (data.cabeza && data.cabeza.codigo) {
+          setHeadCode(data.cabeza.codigo);
+        }
+
+        if (data.cuerpo && data.cuerpo.codigo) {
+          setBodyCode(data.cuerpo.codigo);
+        }
+      } catch (error) {
+        console.error("Error obteniendo avatar:", error);
+      }
+    }
 
   useEffect(() => {
     const nombreGuardado = localStorage.getItem("nombreUsuario");
@@ -63,14 +92,25 @@ const Dashboard = () => {
     );
   };
 
-  const handleSelectSuit = () => {
-    const selectedSuitIndex = currentSuitIndex;
-    setSelectedSuit(suits[selectedSuitIndex]);
-    localStorage.setItem("selectedSuitIndex", selectedSuitIndex); // Guardar en localStorage
-    console.log("cabeza:", selectedHead);
-    console.log("cuerpo:", selectedBody);
+  async function handleSelectSuit() {
+    const idUser = localStorage.getItem("idUsuario");
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/avatar/${idUser}?idCabeza=${selectedHead}&idCuerpo=${selectedBody}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    getAvatar();
     closeAvatarModal();
-  };
+  }
 
   const places = [
     { name: "Lugar 1", image: place1 },
@@ -114,6 +154,7 @@ const Dashboard = () => {
   // Función para cerrar sesión
   const handleLogout = async () => {
     const idUsuario = localStorage.getItem("idUsuario");
+    const token = localStorage.getItem("token");
 
     try {
       const response = await fetch(
@@ -122,6 +163,7 @@ const Dashboard = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token,
           },
         }
       );
@@ -167,13 +209,22 @@ const Dashboard = () => {
 
         <section className="profile">
           <div className="profile-card">
-            <img className="avatar" alt="avatar" src={selectedSuit} />
+            <div className="avatar-images">
+              <div
+                className="avatar-head-preview"
+                dangerouslySetInnerHTML={{ __html: headCode }}
+              />
+              <div
+                className="avatar-body-preview"
+                dangerouslySetInnerHTML={{ __html: bodyCode }}
+              />
+            </div>
             {isAvatarModalOpen && (
               <div className="modal-overlay" onClick={closeAvatarModal}>
                 <div className="modal" onClick={(e) => e.stopPropagation()}>
                   <div style={{ position: "relative" }}>
-                    <HeadCarousel onChange={setSelectedHead}/>
-                    <BodyCarousel onChange={setSelectedBody}/>
+                    <HeadCarousel onChange={setSelectedHead} />
+                    <BodyCarousel onChange={setSelectedBody} />
                     {/* <button
                       className="arrow-button arrow-left"
                       onClick={handlePreviousSuit}

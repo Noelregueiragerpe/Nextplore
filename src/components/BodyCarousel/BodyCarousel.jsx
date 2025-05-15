@@ -35,7 +35,10 @@ const BodyCarousel = ({ onChange }) => {
   }, []);
 
   const handleBodyChange = (current) => {
-    onChange(current);
+    const selectedBody = bodies[current];
+    if (selectedBody) {
+      onChange(selectedBody.id);
+    }
   };
 
   return (
@@ -47,13 +50,14 @@ const BodyCarousel = ({ onChange }) => {
           ref={carouselRef}
           afterChange={handleBodyChange}
           draggable={true}
+          speed={200}
         >
           {bodies.map((body, index) => (
-            <div
-              className="body-carousel-img"
-              dangerouslySetInnerHTML={{ __html: body.codigo }}
-              key={index}
-            />
+              <div
+                className="body-carousel-img"
+                dangerouslySetInnerHTML={{ __html: body.codigo }}
+                key={body.id}
+              />
           ))}
         </Carousel>
       </div>

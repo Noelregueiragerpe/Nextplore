@@ -428,3 +428,29 @@ body {
   justify-content: center;
 }
 
+.avatar-images {
+  background-color: #ececec;
+  border-radius: 50%;
+  padding: 25px;
+  margin-top: 20px;
+}
+
+.avatar-head-preview {
+  max-height: 130px;
+  width: 150px;
+}
+
+.avatar-head-preview svg{
+  max-height: 130px;
+  max-width: 150px;
+}
+
+.avatar-body-preview {
+  max-height: 130px;
+  max-height: 150px;
+}
+
+.avatar-body-preview svg{
+  max-width: 130px;
+  max-height: 150px;
+}
