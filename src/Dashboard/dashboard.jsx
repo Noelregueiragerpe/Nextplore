@@ -225,23 +225,6 @@ const Dashboard = () => {
                   <div style={{ position: "relative" }}>
                     <HeadCarousel onChange={setSelectedHead} />
                     <BodyCarousel onChange={setSelectedBody} />
-                    {/* <button
-                      className="arrow-button arrow-left"
-                      onClick={handlePreviousSuit}
-                    >
-                      {"<"}
-                    </button>
-                    <img
-                      src={suits[currentSuitIndex]}
-                      alt="Avatar seleccionado"
-                      className="avatar-preview"
-                    />
-                    <button
-                      className="arrow-button arrow-right"
-                      onClick={handleNextSuit}
-                    >
-                      {">"}
-                    </button> */}
                   </div>
                   <button
                     onClick={handleSelectSuit}

@@ -138,6 +138,7 @@ body {
   position: relative;
   border-radius: 20%;
   border: 5px solid #ececec;
+  cursor: pointer;
 }
 
 .expandable-menu {

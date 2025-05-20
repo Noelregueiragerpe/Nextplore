@@ -61,7 +61,23 @@ const Travel = () => {
         }
       })
       .catch((error) => console.error("Error cargando el JSON:", error));
+      getApiLocations();
   }, []);
+
+  async function getApiLocations() {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch("http://localhots:8080/api/lugar", {
+        headers: {
+          method: "GET",
+          Authorization: token,
+        },
+      });
+      setLocations(response.json);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -261,7 +277,7 @@ const Travel = () => {
 
       <div className="container">
         <div className="map-container">
-          <MapContainer 
+          <MapContainer
             data-testid="map-container"
             center={position}
             zoom={zoomLevel}

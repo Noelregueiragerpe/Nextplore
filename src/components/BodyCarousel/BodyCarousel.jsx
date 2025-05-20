@@ -3,16 +3,33 @@ import "./BodyCarousel.css";
 import { useEffect, useRef, useState } from "react";
 
 const BodyCarousel = ({ onChange }) => {
-  const [savedBody, setSavedBody] = useState(0);
-  const [currentBody, setCurrentBody] = useState(0);
+  const [savedBodyId, setSavedBodyId] = useState(null);
   const [bodies, setBodies] = useState([]);
   const carouselRef = useRef(null);
 
   useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.goTo(savedBody, false);
-    }
+    const fetchSavedBody = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("idUsuario");
+        const response = await fetch(`http://localhost:8080/api/avatar/${userId}`, {
+          headers: {
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) throw new Error("Error al obtener avatar");
+        const avatar = await response.json();
+        setSavedBodyId(avatar.cuerpo.id);
+      } catch (error) {
+        console.error("Error al obtener cuerpo del avatar:", error);
+      }
+    };
 
+    fetchSavedBody();
+  }, []);
+
+  useEffect(() => {
     const fetchBodies = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -25,14 +42,32 @@ const BodyCarousel = ({ onChange }) => {
         if (!response.ok) {
           throw new Error("Error al obtener los cuerpos");
         }
-        const data = await response.json();
+        let data = await response.json();
+
+        if (savedBodyId) {
+          const index = data.findIndex((b) => b.id === savedBodyId);
+          if (index > 0) {
+            const [match] = data.splice(index, 1);
+            data.unshift(match);
+          }
+        }
+
         setBodies(data);
       } catch (error) {
         console.error("Error: ", error);
       }
     };
-    fetchBodies();
-  }, []);
+
+    if (savedBodyId !== null) {
+      fetchBodies();
+    }
+  }, [savedBodyId]);
+
+  useEffect(() => {
+    if (carouselRef.current && bodies.length > 0) {
+      carouselRef.current.goTo(0, false);
+    }
+  }, [bodies]);
 
   const handleBodyChange = (current) => {
     const selectedBody = bodies[current];
@@ -42,26 +77,24 @@ const BodyCarousel = ({ onChange }) => {
   };
 
   return (
-    <>
-      <div className="body-wrapper">
-        <Carousel
-          arrows
-          dots={false}
-          ref={carouselRef}
-          afterChange={handleBodyChange}
-          draggable={true}
-          speed={200}
-        >
-          {bodies.map((body, index) => (
-              <div
-                className="body-carousel-img"
-                dangerouslySetInnerHTML={{ __html: body.codigo }}
-                key={body.id}
-              />
-          ))}
-        </Carousel>
-      </div>
-    </>
+    <div className="body-wrapper">
+      <Carousel
+        arrows
+        dots={false}
+        ref={carouselRef}
+        afterChange={handleBodyChange}
+        draggable={true}
+        speed={200}
+      >
+        {bodies.map((body) => (
+          <div
+            className="body-carousel-img"
+            dangerouslySetInnerHTML={{ __html: body.codigo }}
+            key={body.id}
+          />
+        ))}
+      </Carousel>
+    </div>
   );
 };
 
