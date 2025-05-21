@@ -12,12 +12,15 @@ const HeadCarousel = ({ onChange }) => {
       try {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("idUsuario");
-        const response = await fetch(`http://localhost:8080/api/avatar/${userId}`, {
-          headers: {
-            Authorization: `${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `http://localhost:8080/api/avatar/${userId}`,
+          {
+            headers: {
+              Authorization: `${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
         if (!response.ok) throw new Error("Error al obtener avatar");
         const avatar = await response.json();
         setSavedHeadId(avatar.cabeza.id);
@@ -86,11 +89,9 @@ const HeadCarousel = ({ onChange }) => {
         speed={200}
       >
         {heads.map((head) => (
-          <div
-            className="head-carousel-image"
-            dangerouslySetInnerHTML={{ __html: head.codigo }}
-            key={head.id}
-          />
+          <div className="head-carousel-image" key={head.id}>
+            <img src={`/accesories/${head.nombre}.svg`} alt={head.nombre} />
+          </div>
         ))}
       </Carousel>
     </div>

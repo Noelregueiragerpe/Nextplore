@@ -31,6 +31,8 @@ const Dashboard = () => {
   const [selectedBody, setSelectedBody] = useState(0);
   const [bodyCode, setBodyCode] = useState("");
   const [headCode, setHeadCode] = useState("");
+  const [headName, setHeadName] = useState("");
+  const [bodyName, setBodyName] = useState("");
   const [nombreUsuario, setNombreUsuario] = useState("");
 
   const navigate = useNavigate();
@@ -40,37 +42,37 @@ const Dashboard = () => {
   }, []);
 
   async function getAvatar() {
-      const idUsuario = localStorage.getItem("idUsuario");
-      const token = localStorage.getItem("token");
+    const idUsuario = localStorage.getItem("idUsuario");
+    const token = localStorage.getItem("token");
 
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/avatar/${idUsuario}`,
-          {
-            headers: {
-              Authorization: token,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Error al obtener el avatar");
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/avatar/${idUsuario}`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
         }
+      );
 
-        const data = await response.json();
-
-        if (data.cabeza && data.cabeza.codigo) {
-          setHeadCode(data.cabeza.codigo);
-        }
-
-        if (data.cuerpo && data.cuerpo.codigo) {
-          setBodyCode(data.cuerpo.codigo);
-        }
-      } catch (error) {
-        console.error("Error obteniendo avatar:", error);
+      if (!response.ok) {
+        throw new Error("Error al obtener el avatar");
       }
+
+      const data = await response.json();
+
+      if (data.cabeza && data.cabeza.nombre) {
+        setHeadName(data.cabeza.nombre);
+      }
+
+      if (data.cuerpo && data.cuerpo.nombre) {
+        setBodyName(data.cuerpo.nombre);
+      }
+    } catch (error) {
+      console.error("Error obteniendo avatar:", error);
     }
+  }
 
   useEffect(() => {
     const nombreGuardado = localStorage.getItem("nombreUsuario");
@@ -96,7 +98,7 @@ const Dashboard = () => {
     const idUser = localStorage.getItem("idUsuario");
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(
+      await fetch(
         `http://localhost:8080/api/avatar/${idUser}?idCabeza=${selectedHead}&idCuerpo=${selectedBody}`,
         {
           method: "PUT",
@@ -210,14 +212,12 @@ const Dashboard = () => {
         <section className="profile">
           <div className="profile-card">
             <div className="avatar-images">
-              <div
-                className="avatar-head-preview"
-                dangerouslySetInnerHTML={{ __html: headCode }}
-              />
-              <div
-                className="avatar-body-preview"
-                dangerouslySetInnerHTML={{ __html: bodyCode }}
-              />
+              <div className="avatar-head-preview">
+                <img src={`/accesories/${headName}.svg`} alt={headName} />
+              </div>
+              <div className="avatar-body-preview">
+                <img src={`/accesories/${bodyName}.svg`} alt={bodyName} />
+              </div>
             </div>
             {isAvatarModalOpen && (
               <div className="modal-overlay" onClick={closeAvatarModal}>

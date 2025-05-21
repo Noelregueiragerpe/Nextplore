@@ -48,34 +48,55 @@ const Travel = () => {
   const [isSearchActive, setIsSearchActive] = useState(false);
 
   useEffect(() => {
-    fetch("../locations.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setLocations(data);
-        if (mapRef.current) {
-          const bounds = mapRef.current.getBounds();
-          const visible = data.filter((location) =>
-            bounds.contains([location.lat, location.lng])
-          );
-          setVisibleLocations(visible);
-        }
-      })
-      .catch((error) => console.error("Error cargando el JSON:", error));
-      getApiLocations();
+    // fetch("../locations.json")
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setLocations(data);
+    //     if (mapRef.current) {
+    //       const bounds = mapRef.current.getBounds();
+    //       const visible = data.filter((location) =>
+    //         bounds.contains([location.lat, location.lng])
+    //       );
+    //       setVisibleLocations(visible);
+    //     }
+    //   })
+    //   .catch((error) => console.error("Error cargando el JSON:", error));
+    getLocations();
   }, []);
 
-  async function getApiLocations() {
+  async function getLocations() {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhots:8080/api/lugar", {
+      const response = await fetch("http://localhost:8080/api/lugar", {
         headers: {
-          method: "GET",
           Authorization: token,
         },
       });
-      setLocations(response.json);
+
+      if (!response.ok) {
+        throw new Error("Error al obtener los lugares");
+      }
+
+      const data = await response.json();
+      const formattedLocations = data.map((item) => ({
+        nombre: item.nombre,
+        lat: item.coordenadasx,
+        lng: item.coordenadasy,
+        imagen: item.imagen,
+        pelicula: item.pelicula?.nombre || "Sin título",
+      }));
+
+      setLocations(formattedLocations);
+
+      if (mapRef.current) {
+        const bounds = mapRef.current.getBounds();
+        const visible = formattedLocations.filter((location) =>
+          bounds.contains([location.lat, location.lng])
+        );
+        setVisibleLocations(visible);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error al cargar los lugares desde la API:", error);
     }
   }
 
@@ -185,7 +206,7 @@ const Travel = () => {
         `<div>
           <strong>${location.nombre}</strong>
           <p>${location.pelicula}</p>
-          <img src="${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
+          <img src="/imagenesLugares/${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
         </div>`
       );
       marker.addTo(mapRef.current).openPopup();
@@ -202,7 +223,7 @@ const Travel = () => {
         `<div>
           <strong>${location.nombre}</strong>
           <p>${location.pelicula}</p>
-          <img src="${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
+          <img src="/imagenesLugares/${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
         </div>`
       );
       marker.addTo(mapRef.current).openPopup();
@@ -320,7 +341,7 @@ const Travel = () => {
                       <strong>{location.nombre}</strong>
                       <p>{location.pelicula}</p>
                       <img
-                        src={location.imagen}
+                        src={`/imagenesLugares/${location.imagen}`}
                         alt={location.nombre}
                         style={{
                           width: "100%",
@@ -341,7 +362,7 @@ const Travel = () => {
                     icon={defaultIcon}
                     eventHandlers={{
                       click: () =>
-                        moveToLocation(location.lat, location.lng, location), // Centra el mapa al hacer clic en el marcador
+                        moveToLocation(location.lat, location.lng, location),
                     }}
                   >
                     <Popup>
@@ -349,7 +370,7 @@ const Travel = () => {
                         <strong>{location.nombre}</strong>
                         <p>{location.pelicula}</p>
                         <img
-                          src={location.imagen} // Ruta de la imagen desde el JSON
+                          src={`/imagenesLugares/${location.imagen}`}
                           alt={location.nombre}
                           style={{
                             width: "100%",
@@ -377,7 +398,7 @@ const Travel = () => {
                             `<div>
                 <strong>${location.nombre}</strong>
                 <p>${location.pelicula}</p>
-                <img src="${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
+                <img src="/imagenesLugares/${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
               </div>`
                           )
                           .openOn(mapRef.current);
@@ -389,7 +410,7 @@ const Travel = () => {
                         <strong>{location.nombre}</strong>
                         <p>{location.pelicula}</p>
                         <img
-                          src={location.imagen}
+                          src={`/imagenesLugares/${location.imagen}`}
                           alt={location.nombre}
                           style={{
                             width: "100%",

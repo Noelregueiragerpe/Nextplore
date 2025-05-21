@@ -441,7 +441,7 @@ body {
   width: 150px;
 }
 
-.avatar-head-preview svg{
+.avatar-head-preview img{
   max-height: 130px;
   max-width: 150px;
 }
@@ -451,7 +451,7 @@ body {
   max-height: 150px;
 }
 
-.avatar-body-preview svg{
+.avatar-body-preview img{
   max-width: 130px;
   max-height: 150px;
 }
