@@ -123,17 +123,31 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
+      const idUsuario = localStorage.getItem("idUsuario");
+      const token = localStorage.getItem("token");
+
       try {
-        const response = await fetch("../notifications.json");
+        const response = await fetch(
+          `http://localhost:8080/api/notificaciones/usuario/${idUsuario}`,
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
         if (!response.ok) {
-          throw new Error("Error al cargar las notificaciones");
+          throw new Error("Error al cargar las notificaciones desde la API");
         }
+
         const data = await response.json();
         setNotifications(data);
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error al obtener notificaciones:", error);
       }
     };
+
     fetchNotifications();
   }, []);
 
@@ -265,12 +279,13 @@ const Dashboard = () => {
           <div className="notifications-container">
             {notifications.map((note) => (
               <div className="notification" key={note.id}>
-                {note.message}
-                {note.badge && <span className="badge">{note.badge}</span>}
+                {note.mensaje}
+                {note.tipo && <span className="badge">{note.tipo}</span>}
               </div>
             ))}
           </div>
         </section>
+
         <section className="s">
           <section className="recommendations">
             <h2 className="title">RECOMENDACIÓN DEL MES</h2>

@@ -8,6 +8,7 @@ import home from "../icons/home.png";
 import "leaflet/dist/leaflet.css";
 import { useNavigate } from "react-router-dom";
 import HelpButton from "../components/HelpButton/HelpButton";
+import { Checkbox } from "antd";
 
 import {
   MapContainer,
@@ -46,6 +47,7 @@ const Travel = () => {
   const mapRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [lugaresVisitados, setLugaresVisitados] = useState([]);
 
   useEffect(() => {
     // fetch("../locations.json")
@@ -62,6 +64,7 @@ const Travel = () => {
     //   })
     //   .catch((error) => console.error("Error cargando el JSON:", error));
     getLocations();
+    getLugaresVisitados();
   }, []);
 
   async function getLocations() {
@@ -79,6 +82,7 @@ const Travel = () => {
 
       const data = await response.json();
       const formattedLocations = data.map((item) => ({
+        id: item.id,
         nombre: item.nombre,
         lat: item.coordenadasx,
         lng: item.coordenadasy,
@@ -207,6 +211,7 @@ const Travel = () => {
           <strong>${location.nombre}</strong>
           <p>${location.pelicula}</p>
           <img src="/imagenesLugares/${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
+          
         </div>`
       );
       marker.addTo(mapRef.current).openPopup();
@@ -224,6 +229,7 @@ const Travel = () => {
           <strong>${location.nombre}</strong>
           <p>${location.pelicula}</p>
           <img src="/imagenesLugares/${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
+          
         </div>`
       );
       marker.addTo(mapRef.current).openPopup();
@@ -242,6 +248,91 @@ const Travel = () => {
       setSelectedLocation(null); // Resetea la selección del lugar
     }
   };
+
+  const handleVisitedChange = async (checked, locationId) => {
+  const idUsuario = localStorage.getItem("idUsuario");
+  const token = localStorage.getItem("token");
+
+  if (checked) {
+    // Si está chequeado, crear la relación explorado
+    try {
+      const response = await fetch("http://localhost:8080/api/explorado", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          id: {
+            idUsuario: parseInt(idUsuario),
+            idLugar: locationId,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al marcar como visitado");
+      }
+
+      console.log("Lugar marcado como visitado correctamente");
+      // Actualiza el estado para reflejar el cambio
+      setLugaresVisitados((prev) => [...prev, locationId]);
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
+    }
+  } else {
+    // Si se desmarca, eliminar la relación
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/explorado/${idUsuario}/${locationId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al desmarcar como visitado");
+      }
+
+      console.log("Lugar desmarcado como visitado correctamente");
+      // Elimina el ID del estado local
+      setLugaresVisitados((prev) =>
+        prev.filter((id) => id !== locationId)
+      );
+    } catch (error) {
+      console.error("Error al eliminar la relación explorado:", error);
+    }
+  }
+};
+
+
+  async function getLugaresVisitados() {
+    const token = localStorage.getItem("token");
+    const idUsuario = localStorage.getItem("idUsuario");
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/explorado/usuario/${idUsuario}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al obtener lugares visitados");
+      }
+
+      const data = await response.json();
+      const ids = data.map(item => item.lugarEntidad.id);
+      setLugaresVisitados(ids);
+    } catch (error) {
+      console.error("Error al cargar lugares visitados:", error);
+    }
+  }
 
   return (
     <div>
@@ -399,6 +490,7 @@ const Travel = () => {
                 <strong>${location.nombre}</strong>
                 <p>${location.pelicula}</p>
                 <img src="/imagenesLugares/${location.imagen}" style="width:100%; height:auto; border-radius:10px;" />
+                
               </div>`
                           )
                           .openOn(mapRef.current);
@@ -440,6 +532,14 @@ const Travel = () => {
                 >
                   <strong>{location.nombre}</strong>
                   <p>{location.pelicula}</p>
+                  <Checkbox
+                    checked={lugaresVisitados.includes(location.id)}
+                    onChange={(e) =>
+                      handleVisitedChange(e.target.checked, location.id)
+                    }
+                  >
+                    Visitado
+                  </Checkbox>
                 </div>
               ))
             ) : (
