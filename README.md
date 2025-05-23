@@ -41,6 +41,7 @@ Este proyecto está orientado tanto a empresas del sector del turismo como a com
 - Posibilidad de descubrir nuevas locaciones cercanas o planear viajes a locaciones más lejanas.
 - Gamificación con desbloqueo de trajes y objetos exclusivos.
 - **Personalización de Avatar:** Los usuarios pueden personalizar su avatar combinando diferentes elementos de **cabeza y cuerpo**, seleccionándolos a través de un carrusel de opciones disponibles.
+- Sistema de visitas de localizaciones.
 </details>
 
 ---
